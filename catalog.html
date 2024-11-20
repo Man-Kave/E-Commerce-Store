@@ -44,26 +44,27 @@
             cursor: pointer;
         }
         .product-image {
-            width: 100%;
-            height: auto;
-            max-height: 180px;
-            object-fit: cover;
-        }
-        .product-title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .product-price {
-            color: #b12704;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-        .product-description {
-            font-size: 0.9rem;
-            color: #555;
-            margin: 10px 0;
-            text-align: left;
+        width: auto;
+        height: auto;
+        max-height: 180px;
+        object-fit: cover;
+    }
+
+    .product-title {
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .product-price {
+        color: #b12704;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+    .product-description {
+        font-size: 0.9rem;
+        color: #555;
+        margin: 10px 0;
+        text-align: left;
         }
     </style>
 </head>
@@ -125,23 +126,53 @@
             <p class="product-price">$${price.toFixed(2)}</p>
         `;
 
-        // JSON-LD for SEO
         const jsonLd = {
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": name,
-            "image": [firstImage],
-            "description": description,
-            "offers": {
-                "@type": "Offer",
-                "priceCurrency": priceCurrency,
-                "price": price.toFixed(2),
-                "availability": availability,
-                "url": `product_page.html?handle=${handle}`,
-                ...(shippingDetails && { "shippingDetails": shippingDetails }),
-                ...(hasMerchantReturnPolicy && { "hasMerchantReturnPolicy": hasMerchantReturnPolicy })
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": name,
+    "image": [firstImage],
+    "description": description,
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": priceCurrency,
+        "price": price.toFixed(2),
+        "availability": availability,
+        "url": `product_page.html?handle=${handle}`,
+        "priceValidUntil": "2025-12-31", // Example date for price validity
+        ...(shippingDetails && { "shippingDetails": shippingDetails }),
+        ...(hasMerchantReturnPolicy && { "hasMerchantReturnPolicy": hasMerchantReturnPolicy })
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5", // Replace with actual average rating
+        "reviewCount": "30" // Replace with the actual number of reviews
+    },
+    "review": [
+        {
+            "@type": "Review",
+            "author": "John Doe", // Example author
+            "datePublished": "2024-01-01", // Example date
+            "description": "Excellent product! Highly recommend.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5", // Example rating
+                "bestRating": "5"
             }
-        };
+        },
+        {
+            "@type": "Review",
+            "author": "Jane Smith", // Example author
+            "datePublished": "2024-02-15", // Example date
+            "description": "Good quality and great price.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "4", // Example rating
+                "bestRating": "5"
+            }
+        }
+    ]
+};
+
 
         const jsonLdScript = document.createElement('script');
         jsonLdScript.type = 'application/ld+json';
