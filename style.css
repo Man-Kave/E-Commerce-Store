@@ -1,0 +1,805 @@
+body {
+    max-width: 1990px;
+    color: black;
+    margin: 0 auto;
+}
+/* Flex layout for top-bar to align left and right columns */
+.top-bar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    background-color: rgba(128, 128, 128, 0.2);
+    background: linear-gradient(to top, #ffffff, #c2c2c2); /* More contrast between colors */
+
+}
+
+/* Center content within the container */
+.container {
+    max-width: 1990px;
+    margin: 0 auto;    
+}
+.container a {
+    padding: 0px 10px;
+}
+
+/* Flex layout for the header main section */
+.header-row {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Logo section with 10% space */
+.col-logo {
+    flex: 0 0 10%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.logo-image {
+    max-height: 75px;
+    height: auto;
+    margin: 0 auto;
+}
+.category-dropdown {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+/* Search section to take up remaining space */
+.col-search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling for the search bar form */
+.search-form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #f3f3f3;
+}
+
+/* Input field styling */
+.search-input {
+    flex: 1;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Search button styling */
+.search-button {
+    background-color: #fbbb65;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+/* Cart section with 10% space */
+.col-cart {
+    flex: 0 0 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Styling for cart info */
+.cart-summary {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    padding: 25px 25px;
+    font-size: x-large;
+}
+
+.cart-icon {
+    width: 50px;
+    height: auto;
+}
+
+.cart-count {
+    background-color: #fbbb65;
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: large;
+}
+
+/* Service and Account Links Styling */
+.service-links, .account-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0 10px;;
+    padding: 0;
+    font-size: 12px;
+}
+
+.service-links a, .account-links a {
+    color: black;
+    text-decoration: none;
+}
+
+.service-links a:hover, .account-links a:hover {
+    color: maroon;
+}
+/* Main navigation styling */
+.main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    position: relative;
+    background: linear-gradient(to bottom, #ffffff, #c2c2c2); /* More contrast between colors */
+    border: 1px solid #c0c0c0; /* Light gray border for the "edge" */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), /* Stronger top inset shadow */
+                0 4px 8px rgba(0, 0, 0, 0.4); /* Larger shadow below */
+}
+
+
+/* Position the hamburger menu on the left side */
+.hamburger-menu {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger-menu span {
+    height: 3px;
+    width: 25px;
+    background-color: black;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Dropdown menu styling (initially hidden) */
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu ul li a {
+    color: black; /* Black text for dropdown links */
+    text-decoration: none;
+    display: block;
+    padding: 8px 0;
+}
+
+/* Display dropdown when active */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Styling the menu list to align items in a single row and center */
+.menu-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px; /* Space between the links */
+}
+
+/* Styling for each link */
+.menu-list li a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
+}
+
+.menu-list li a:hover {
+    color: #fbbb65; /* Changes color on hover */
+}
+/* Sidebar overlay styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    transform: translateX(-100%); /* Start hidden off-screen */
+    transition: transform 0.3s ease; /* Smooth slide-in effect */
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Sidebar visible when active */
+.sidebar.active {
+    transform: translateX(0); /* Slide in */
+}
+
+/* Sidebar header styling */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.sidebar-header .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Sidebar menu styling */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.sidebar-menu li strong {
+    font-size: 18px;
+    color: #333;
+    display: block;
+    margin-top: 15px;
+}
+
+.sidebar-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.sidebar-menu li a:hover {
+    color: #fbbb65;
+}
+
+/* Main content area styling */
+.main-content {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+.slideshow-section {
+    position: relative;
+    width: 100%;
+    height: 30vh;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slideshow img {
+    width: 100%;
+    opacity: 0; /* Hide all images by default */
+    position: absolute;
+    transition: opacity 1s ease; /* Smooth transition for fading in/out */
+}
+
+.slideshow img.visible {
+    opacity: 1; /* Show the image with the 'visible' class */
+    position: relative; /* Keeps the visible image in its place */
+}
+
+.product-card {
+    width: 200px;
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.product-card .price {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Product recommendations styling */
+.product-recommendations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product-section {
+    flex: 1;
+    min-width: 300px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-section h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.product-grid {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 200px; /* Consistent width for product cards */
+    text-align: center;
+    display: none; /* Hide initially until image is loaded */
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.product-item img {
+    width: 100%;
+    max-width: 90%;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    transition: transform 0.3s;
+}
+
+.product-item img:hover {
+    transform: scale(1.1);
+}
+
+.product-item p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 8px;
+}
+
+
+
+
+
+/* Footer styling */
+.footer {
+    background-color: #232f3e;
+    color: #ffffff;
+    padding-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer a {
+    color: #dddddd;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #fbbb65;
+}
+
+/* Footer top section with link groups */
+.footer-top {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.footer-column {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.footer-column h4 {
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
+/* Footer bottom with logo and settings */
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid #3a4553;
+}
+
+.footer-logo img {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.footer-settings a {
+    color: #dddddd;
+    margin: 0 10px;
+}
+
+/* Footer legal section */
+.footer-legal {
+    background-color: #131a22;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-top: 1px solid #3a4553;
+}
+
+.footer-legal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-legal ul li {
+    display: inline;
+}
+/* Basic styles for the modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal3 {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    margin-top: 10%;
+    width: 100%;
+    height: 40%;
+    
+}
+.modal-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.modal-content button {
+    margin-top: 15px;;
+}
+/* Center the modal on the screen */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(to top, #ffffff, #d0d0d0); /* More contrast between colors */
+
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+
+/* Form styling */
+#loginForm, #registerForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#loginForm label, #registerForm label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#loginForm input, #registerForm input {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: calc(100% - 10px);
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    cursor: pointer;
+}
+
+/* Center Sign In and Register buttons */
+#loginForm button, #registerForm button {
+    width: 100%;
+    padding: 8px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#loginForm p, #registerForm p {
+    text-align: center;
+    margin-top: 15px;
+}
+.validation-field {
+    position: relative;
+    width: 100%;
+}
+
+.validation-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.validation-icon.success {
+    color: green;
+    content: "✔️";
+}
+
+.validation-icon.error {
+    color: red;
+    content: "❌";
+}
+
+#successModal .modal-content {
+    text-align: center;
+    font-size: 1.5rem;
+}
+.feedback {
+    color: red;
+    font-size: 0.8em;
+    display: none;
+}
+
+#password-strength {
+    height: 5px;
+    background: lightgray;
+    margin-top: 5px;
+}
+
+#password-strength[data-strength="weak"] {
+    background: red;
+    width: 33%;
+}
+
+#password-strength[data-strength="medium"] {
+    background: orange;
+    width: 66%;
+}
+
+#password-strength[data-strength="strong"] {
+    background: green;
+    width: 100%;
+}
+
+.terms {
+    margin-top: 15px;
+}
+
+button:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+}
+.forgot-password {
+    font-size: 0.9em; /* Smaller font size */
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: blue;
+    text-decoration: underline;
+}
+#signedInStatus {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.sign-out-link {
+    color: red;
+    text-decoration: underline;
+    display: block;
+    margin-top: 5px;
+    cursor: pointer;
+}
+/* Styling for the checkout sidebar */
+.snipcart-checkout {
+    cursor: pointer;
+}
+
+/* Styling for the checkout sidebar */
+.checkout-sidebar {
+    max-width: 30%;
+}
+
+.snipcart-modal__container {
+    max-width: 80% !important;
+    left: 10% !important; /* Center horizontally */
+    right: auto !important;
+}
+
+/* Center the cart on larger screens */
+@media (min-width: 1024px) {
+    .snipcart-modal__container {
+        max-width: 80%;
+        left: 10% !important; /* Centered */
+        right: auto !important;
+    }
+}
+.snipcart-item-line__media img {
+    width: 50px; /* Adjust as needed */
+    height: auto;
+    margin-right: 10px;
+}
+/* Modal2 background overlay */
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+}
+
+/* Modal2 content box */
+.modal2 .modal-content2 {
+    position: relative;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    width: 80%; /* Adjust width to fit your layout */
+    height: 80%; /* Adjust height for screen */
+    top: 40%;
+    transform: translateY(-50%);
+    border-radius: 8px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Dashboard layout inside modal2 */
+.dashboard-container {
+    display: flex;
+    height: 100%;
+}
+
+.dashboard-sidebar {
+    width: 25%;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.dashboard-main {
+    width: 75%;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.order-entry {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.order-entry h4 {
+    margin: 5px 0;
+}
+
+.order-entry p {
+    margin: 2px 0;
+    color: #555;
+}
+
+.order-entry .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.order-entry .action-buttons button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.track-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.return-button {
+    background-color: #dc3545;
+    color: white;
+}
+/* Specific dashboard modal adjustments */
+.modal#customerDashboardModal .modal-content {
+    width: 60%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+}
+.variant-thumbnail {
+    max-width: 300px;
+    
+}
