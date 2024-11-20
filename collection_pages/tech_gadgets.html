@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="../images/Man Kave logo 2t.png" type="image/x-icon">
+    <link rel="stylesheet" href="../style.css">
+    <title>Man Kave - Tech & Gadgets Collection</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+        .catalog-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px;
+        }
+        .product-item {
+            width: 200px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .product-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .product-title {
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+        }
+        .product-title:hover {
+            color: #0056b3;
+        }
+        .product-price {
+            color: #b12704;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <h1>Product Catalog - Tech & Gadgets</h1>
+    <div id="catalog-container" class="catalog-grid"></div>
+
+    <div id="footer-placeholder"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const catalogContainer = document.getElementById('catalog-container');
+            const jsonFilePath = '../updated_products.json';  // Path to JSON file in the parent directory
+
+            fetch(jsonFilePath)
+                .then(response => response.json())
+                .then(products => {
+                    products.forEach(product => {
+                        const title = product['Title'] || "Untitled Product";
+                        const handle = product['Handle'] || "unknown-handle";
+                        const mainImages = product['main_images'] && product['main_images'].length > 0 
+                                           ? `../${product['main_images'][0]}` // Prepend "../" to image path
+                                           : "../product_images/default_image.webp";
+                        const price = product['variants'] && product['variants'][0] && product['variants'][0]['sizes'] && product['variants'][0]['sizes'][0]['price']
+                            ? product['variants'][0]['sizes'][0]['price'].toFixed(2)
+                            : "0.00";
+
+                        // Filter products based on Tech & Gadgets category or tag
+                        const category = product['Product Category'] || '';
+                        const tags = product['Tags'] || [];
+                        const isTechGadget = category.includes('Electronics') || category.includes('Tech & Gadgets') || tags.includes('Tech & Gadgets');
+
+                        if (isTechGadget) {
+                            const productDiv = document.createElement('div');
+                            productDiv.className = 'product-item';
+
+                            const link = document.createElement('a');
+                            link.href = `../product_page.html?handle=${encodeURIComponent(handle)}`;
+
+                            const img = document.createElement('img');
+                            img.src = mainImages;  // Updated image path
+                            img.alt = title;
+                            img.className = 'product-image';
+
+                            img.onload = () => {
+                                productDiv.style.display = 'block';
+                            };
+                            img.onerror = () => {
+                                productDiv.remove();
+                            };
+
+                            link.appendChild(img);
+                            productDiv.appendChild(link);
+
+                            const titleLink = document.createElement('a');
+                            titleLink.href = `../product_page.html?handle=${encodeURIComponent(handle)}`;
+                            titleLink.className = 'product-title';
+                            titleLink.textContent = title;
+
+                            productDiv.appendChild(titleLink);
+
+                            const priceElement = document.createElement('div');
+                            priceElement.className = 'product-price';
+                            priceElement.textContent = `$${price}`;
+
+                            productDiv.appendChild(priceElement);
+                            catalogContainer.appendChild(productDiv);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading product data:', error));
+        });
+
+        // Load header and footer
+        fetch('../header.html')  // Path adjusted for header.html in the parent directory
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('../footer.html')  // Path adjusted for footer.html in the parent directory
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+</body>
+</html>
