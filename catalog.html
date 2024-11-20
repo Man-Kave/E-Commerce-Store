@@ -100,76 +100,64 @@
             })
             .catch(error => console.error('Error loading products:', error));
 
-        // Render products to the catalog
-        function renderProducts(productList) {
-            const catalogContainer = document.getElementById('catalog-container');
-            catalogContainer.innerHTML = ''; // Clear the container
+            function renderProducts(productList) {
+    const catalogContainer = document.getElementById('catalog-container');
+    catalogContainer.innerHTML = ''; // Clear the container
 
-            productList.forEach((product, index) => {
-                const { name, description, image, offers } = product;
+    productList.forEach((product, index) => {
+        const { name, description, image, offers } = product;
 
-                if (!name || !description || !image?.length || !offers?.length) {
-                    console.warn(`Skipping product at index ${index} due to missing data.`);
-                    return;
-                }
-
-                const firstImage = image[0];
-                const { price, priceCurrency, availability, handle } = offers[0];
-
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-
-                productCard.innerHTML = `
-                    <img src="${firstImage}" alt="${name}" class="product-image" />
-                    <h3 class="product-title">${name}</h3>
-                    <p class="product-description">${description}</p>
-                    <p class="product-price">$${price.toFixed(2)}</p>
-                `;
-
-                // JSON-LD for SEO
-                const jsonLd = document.createElement('script');
-                jsonLd.type = 'application/ld+json';
-                jsonLd.textContent = JSON.stringify({
-                    "@context": "https://schema.org/",
-                    "@type": "Product",
-                    "name": name,
-                    "image": [firstImage],
-                    "description": description,
-                    "offers": {
-                        "@type": "Offer",
-                        "priceCurrency": priceCurrency,
-                        "price": price.toFixed(2),
-                        "availability": availability,
-                        "url": `product_page.html?handle=${handle}`
-                    }
-                });
-
-                productCard.appendChild(jsonLd);
-
-                // Click-to-Redirect
-                productCard.addEventListener('click', () => {
-                    window.location.href = `product_page.html?handle=${handle}`;
-                });
-
-                catalogContainer.appendChild(productCard);
-            });
+        if (!name || !description || !image?.length || !offers?.length) {
+            console.warn(`Skipping product at index ${index} due to missing data.`);
+            return;
         }
 
-        document.getElementById('filterOptions').addEventListener('change', (event) => {
-    const filter = event.target.value;
+        const firstImage = image[0];
+        const { price, priceCurrency, availability, handle, shippingDetails, hasMerchantReturnPolicy } = offers[0];
 
-    let sortedProducts = [...products]; // Create a shallow copy to avoid modifying the original array
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
 
-    if (filter === 'az') {
-        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (filter === 'lowPrice') {
-        sortedProducts.sort((a, b) => a.offers[0].price - b.offers[0].price);
-    } else if (filter === 'highPrice') {
-        sortedProducts.sort((a, b) => b.offers[0].price - a.offers[0].price);
-    }
+        productCard.innerHTML = `
+            <img src="${firstImage}" alt="${name}" class="product-image" />
+            <h3 class="product-title">${name}</h3>
+            <p class="product-description">${description}</p>
+            <p class="product-price">$${price.toFixed(2)}</p>
+        `;
 
-    renderProducts(sortedProducts); // Re-render with sorted products
-});
+        // JSON-LD for SEO
+        const jsonLd = {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": name,
+            "image": [firstImage],
+            "description": description,
+            "offers": {
+                "@type": "Offer",
+                "priceCurrency": priceCurrency,
+                "price": price.toFixed(2),
+                "availability": availability,
+                "url": `product_page.html?handle=${handle}`,
+                ...(shippingDetails && { "shippingDetails": shippingDetails }),
+                ...(hasMerchantReturnPolicy && { "hasMerchantReturnPolicy": hasMerchantReturnPolicy })
+            }
+        };
+
+        const jsonLdScript = document.createElement('script');
+        jsonLdScript.type = 'application/ld+json';
+        jsonLdScript.textContent = JSON.stringify(jsonLd);
+
+        productCard.appendChild(jsonLdScript);
+
+        // Click-to-Redirect
+        productCard.addEventListener('click', () => {
+            window.location.href = `product_page.html?handle=${handle}`;
+        });
+
+        catalogContainer.appendChild(productCard);
+    });
+}
+
 
 
         // Load header and footer dynamically
