@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="./images/Man Kave Text.png" type="image/x-icon">
+        <title>Man Kave</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        <!-- Snipcart styles and script -->
+        <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.css" />
+        <script async src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"></script>
+    </head>
+    
+    <body>
+        <!-- Snipcart data element for API key -->
+        <div hidden id="snipcart" data-api-key="Njg5ZjVkMjAtNzk5Ny00ZjRhLTg2YTctOGZlY2NjNzA4ZDNkNjM4NjU5OTY3MDg3MTg0MzA2
+        "></div>
+
+        <div id="header-placeholder"></div>
+
+        
+<!-- MAIN CONTENT START -->
+<div class="main-content">
+<!-- Carousel / Banner Section -->
+<section class="slideshow-section">
+    <div class="slideshow">
+        <img src="images/4e6a4d78-abca-43ed-926c-5b855f5ab6f4.png" alt="Banner 1">
+        <img src="images/DALL·E 2024-09-21 20.50.09 - A cozy man cave with a person sitting in front of a triple-monitor setup, playing or watching something on all screens. The room is carved out of a ca.webp" alt="Banner 2">
+        <img src="images/DALL·E 2024-09-22 00.48.07 - A bright room inside a cave filled with high-tech gadgets and equipment. The cave walls are smooth and illuminated by soft, natural light from an over.webp" alt="Banner 3">
+    </div>
+</section>
+    
+
+
+<div id="product-list">
+    <!-- Products will be dynamically inserted here -->
+</div>
+
+
+
+    <!-- Product Recommendations -->
+    <section class="product-recommendations">
+        <div class="product-section">
+            <h2>Pick up where you left off</h2>
+            <div class="product-grid">
+                <div class="product-item"><img src="images/Man Kave Text.png" alt="Product 1"><p>Logitech G502 X Lightspeed</p></div>
+                <div class="product-item"><img src="images/product2.jpg" alt="Product 2"><p>Logitech G203 Wired</p></div>
+                <div class="product-item"><img src="images/product3.jpg" alt="Product 3"><p>Logitech G305 Lightspeed</p></div>
+                <div class="product-item"><img src="images/product4.jpg" alt="Product 4"><p>Logitech G602 Wireless</p></div>
+            </div>
+        </div>
+        
+        <div class="product-section">
+            <h2>Keep shopping for</h2>
+            <div class="product-grid">
+                <div class="product-item"><img src="images/product5.jpg" alt="Product 5"><p>Roller window shades</p></div>
+                <div class="product-item"><img src="images/product6.jpg" alt="Product 6"><p>Clothes dryer</p></div>
+                <div class="product-item"><img src="images/product7.jpg" alt="Product 7"><p>Photographic studio</p></div>
+            </div>
+        </div>
+        
+        <div class="product-section">
+            <h2>Related to items you've saved</h2>
+            <div class="product-grid">
+                <div class="product-item"><img src="images/product8.jpg" alt="Product 8"><p>Neck massager</p></div>
+                <div class="product-item"><img src="images/product9.jpg" alt="Product 9"><p>Portable heater</p></div>
+                <div class="product-item"><img src="images/product10.jpg" alt="Product 10"><p>Electric kettle</p></div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="footer-placeholder"></div>
+
+
+
+<script>
+    // JavaScript to dynamically load header.html content
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading header:', error));
+    // Load footer.html
+    fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+    })
+    .catch(error => console.error('Error loading footer:', error));
+</script>
+
+<script src="account.js"></script>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
