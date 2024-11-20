@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Man Kave Catalog</title>
+    <link rel="icon" href="./images/Man Kave Text.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .filter-container {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px;
+        }
+        .filter-select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .catalog-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product-card:hover {
+            border: 1px solid #e71414;
+            cursor: pointer;
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: cover;
+        }
+        .product-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .product-price {
+            color: #b12704;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .product-description {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 10px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <h1>Product Catalog</h1>
+
+    <!-- Filter Dropdown -->
+    <div class="filter-container">
+        <select id="filterOptions" class="filter-select">
+            <option value="default">Sort By</option>
+            <option value="az">A-Z</option>
+            <option value="lowPrice">Lowest Price</option>
+            <option value="highPrice">Highest Price</option>
+        </select>
+        
+    </div>
+
+    <div id="catalog-container" class="catalog-grid"></div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        let products = []; // Holds the products for sorting and filtering
+
+        // Load product data
+        fetch('updated_products.json')
+            .then(response => response.json())
+            .then(data => {
+                products = data; // Save products for filtering
+                renderProducts(products); // Initial render
+            })
+            .catch(error => console.error('Error loading products:', error));
+
+        // Render products to the catalog
+        function renderProducts(productList) {
+            const catalogContainer = document.getElementById('catalog-container');
+            catalogContainer.innerHTML = ''; // Clear the container
+
+            productList.forEach((product, index) => {
+                const { name, description, image, offers } = product;
+
+                if (!name || !description || !image?.length || !offers?.length) {
+                    console.warn(`Skipping product at index ${index} due to missing data.`);
+                    return;
+                }
+
+                const firstImage = image[0];
+                const { price, priceCurrency, availability, handle } = offers[0];
+
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                productCard.innerHTML = `
+                    <img src="${firstImage}" alt="${name}" class="product-image" />
+                    <h3 class="product-title">${name}</h3>
+                    <p class="product-description">${description}</p>
+                    <p class="product-price">$${price.toFixed(2)}</p>
+                `;
+
+                // JSON-LD for SEO
+                const jsonLd = document.createElement('script');
+                jsonLd.type = 'application/ld+json';
+                jsonLd.textContent = JSON.stringify({
+                    "@context": "https://schema.org/",
+                    "@type": "Product",
+                    "name": name,
+                    "image": [firstImage],
+                    "description": description,
+                    "offers": {
+                        "@type": "Offer",
+                        "priceCurrency": priceCurrency,
+                        "price": price.toFixed(2),
+                        "availability": availability,
+                        "url": `product_page.html?handle=${handle}`
+                    }
+                });
+
+                productCard.appendChild(jsonLd);
+
+                // Click-to-Redirect
+                productCard.addEventListener('click', () => {
+                    window.location.href = `product_page.html?handle=${handle}`;
+                });
+
+                catalogContainer.appendChild(productCard);
+            });
+        }
+
+        document.getElementById('filterOptions').addEventListener('change', (event) => {
+    const filter = event.target.value;
+
+    let sortedProducts = [...products]; // Create a shallow copy to avoid modifying the original array
+
+    if (filter === 'az') {
+        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (filter === 'lowPrice') {
+        sortedProducts.sort((a, b) => a.offers[0].price - b.offers[0].price);
+    } else if (filter === 'highPrice') {
+        sortedProducts.sort((a, b) => b.offers[0].price - a.offers[0].price);
+    }
+
+    renderProducts(sortedProducts); // Re-render with sorted products
+});
+
+
+        // Load header and footer dynamically
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+
+    <script src="account.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
