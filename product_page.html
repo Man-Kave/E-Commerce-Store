@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Man Kave Product Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./images/Man Kave Text.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container2 {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .carousel {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        .thumbnail {
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 2px solid transparent;
+        }
+        .thumbnail.active {
+            border-color: #333;
+        }
+        .main-image {
+            width: 400px;
+            height: auto;
+        }
+        .product-details {
+            flex: 1;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e60023;
+        }
+        .variant-options {
+            margin: 20px 0;
+            max-width: 300px;
+        }
+        .checkout-sidebar {
+            width: 300px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <div class="container2">
+        <!-- Image Gallery -->
+        <div class="image-gallery">
+            <img id="mainImage" src="product_images/default_image.webp" alt="Product Image" class="main-image">
+            <div class="carousel" id="thumbnailCarousel"></div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="product-details">
+            <h1 class="product-title" id="productTitle">Product Title</h1>
+            <p class="price" id="productPrice">$0.00</p>
+            <p id="productDescription">Product description will appear here.</p>
+
+            <div class="variant-options">
+                <h3>Available Options</h3>
+                <div><strong>Color:</strong><div id="colorOptions"></div></div>
+                <div><strong>Size:</strong><div id="sizeOptions"></div></div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="checkout-sidebar">
+            <h3 id="sidebarPrice">$0.00</h3>
+            <p>Selected Variant: <span id="selectedVariant">Default</span></p>
+            <img id="selectedVariantThumbnail" src="" alt="Selected Variant" style="width: 50px; height: auto;">
+            <p>Size: <span id="selectedSize">Default</span></p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" value="1" min="1">
+            <button id="addToCartButton" class="snipcart-add-item">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script>
+        // Load header and footer dynamically
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+
+    <script src="product_page.js"></script>
+    <script src="script.js"></script>
+    <script src="account.js"></script>
+    <script async src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"></script>
+</body>
+</html>
