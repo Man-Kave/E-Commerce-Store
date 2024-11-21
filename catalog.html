@@ -126,7 +126,7 @@
             <p class="product-price">$${price.toFixed(2)}</p>
         `;
 
-        const jsonLd = {
+const jsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": name,
@@ -144,34 +144,27 @@
     },
     "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.5", // Replace with actual average rating
-        "reviewCount": "30" // Replace with the actual number of reviews
+        "ratingValue": "5.0", // Replace with actual average rating
+        "reviewCount": "1" // Replace with the actual number of reviews
     },
     "review": [
         {
             "@type": "Review",
-            "author": "John Doe", // Example author
-            "datePublished": "2024-01-01", // Example date
+            "author": {
+                "@type": "Person",
+                "name": "John Doe" 
+            },
+            "datePublished": "2024-01-01",
             "description": "Excellent product! Highly recommend.",
             "reviewRating": {
                 "@type": "Rating",
-                "ratingValue": "5", // Example rating
-                "bestRating": "5"
-            }
-        },
-        {
-            "@type": "Review",
-            "author": "Jane Smith", // Example author
-            "datePublished": "2024-02-15", // Example date
-            "description": "Good quality and great price.",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "4", // Example rating
+                "ratingValue": "5",
                 "bestRating": "5"
             }
         }
     ]
 };
+
 
 
         const jsonLdScript = document.createElement('script');
